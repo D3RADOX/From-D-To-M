@@ -1,50 +1,58 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: #000;
-  font-family: 'Segoe UI', sans-serif;
-  overflow: hidden;
+const canvas = document.getElementById("bgCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+const heartPoints = 100;
+
+function heartShape(t) {
+  const x = 16 * Math.pow(Math.sin(t), 3);
+  const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+  return { x, y };
 }
 
-.container {
-  position: relative;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 1;
+function createHeartParticles() {
+  const width = canvas.width / 2;
+  const height = canvas.height / 2;
+  for (let i = 0; i < heartPoints; i++) {
+    const t = (i / heartPoints) * 2 * Math.PI;
+    const { x, y } = heartShape(t);
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      tx: width + x * 10,
+      ty: height - y * 10,
+      radius: 2,
+      color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+    });
+  }
 }
 
-.magic-text {
-  font-size: 2.5rem;
-  text-align: center;
-  background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ade80, #22d3ee);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 6s ease-in-out infinite;
-  position: absolute;
-  z-index: 2;
+function animateParticles(step = 0) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let p of particles) {
+    p.x += (p.tx - p.x) * 0.05;
+    p.y += (p.ty - p.y) * 0.05;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+  }
+  if (step < 80) {
+    requestAnimationFrame(() => animateParticles(step + 1));
+  } else {
+    document.getElementById("final-message").classList.remove("hidden");
+  }
 }
 
-.hidden {
-  display: none;
+function sequenceStart() {
+  setTimeout(() => {
+    document.getElementById("first-message").style.display = "none";
+    createHeartParticles();
+    animateParticles();
+  }, 3000);
 }
 
-canvas#bgCanvas {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  background: #000;
-}
-
-@keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+sequenceStart();
