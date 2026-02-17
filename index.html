@@ -1,81 +1,23 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Al’s Diamond Bouncer Checklist</title>
-  <meta name="description" content="Minimal checklist for Al’s Diamond bouncer duties (Opening, During Shift, Closing)." />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="wrap">
-    <header class="header">
-      <div class="titleBlock">
-        <h1>Al’s Diamond Bouncer Checklist</h1>
-        <p class="sub">Check items as you complete them. Saves automatically on this device.</p>
-      </div>
 
-      <div class="headerActions">
-        <button class="btn" id="expandAllBtn" type="button">Expand all</button>
-        <button class="btn" id="collapseAllBtn" type="button">Collapse all</button>
-        <button class="btn danger" id="resetBtn" type="button">Reset</button>
-      </div>
-    </header>
+  <div class="container">
+    <h1>Al’s Diamond Bouncer Checklist</h1>
 
-    <section class="card">
-      <div class="progressRow">
-        <div class="progressMeta">
-          <div class="progressTitle">Overall progress</div>
-          <div class="progressText" id="overallProgressText">0/0</div>
-        </div>
-        <div class="progressBar" aria-hidden="true">
-          <div class="progressFill" id="overallProgressFill"></div>
-        </div>
-      </div>
-    </section>
+    <div id="checklist"></div>
 
-    <section class="card" aria-label="Checklist">
-      <details class="section" id="section-opening" open>
-        <summary>
-          <span class="summaryLeft">
-            <span class="sectionTitle">Opening</span>
-            <span class="sectionCount" id="openingCount">0/0</span>
-          </span>
-          <span class="chev" aria-hidden="true">▾</span>
-        </summary>
-        <div class="sectionBody" id="openingList"></div>
-      </details>
+    <div class="footer">
+      <button id="resetBtn">Reset All</button>
+    </div>
+  </div>
 
-      <details class="section" id="section-during">
-        <summary>
-          <span class="summaryLeft">
-            <span class="sectionTitle">During Shift</span>
-            <span class="sectionCount" id="duringCount">0/0</span>
-          </span>
-          <span class="chev" aria-hidden="true">▾</span>
-        </summary>
-        <div class="sectionBody" id="duringList"></div>
-      </details>
-
-      <details class="section" id="section-closing">
-        <summary>
-          <span class="summaryLeft">
-            <span class="sectionTitle">Closing</span>
-            <span class="sectionCount" id="closingCount">0/0</span>
-          </span>
-          <span class="chev" aria-hidden="true">▾</span>
-        </summary>
-        <div class="sectionBody" id="closingList"></div>
-      </details>
-    </section>
-
-    <footer class="footer">
-      <small>
-        Tip: Put these files in your GitHub repo root and enable GitHub Pages to share it.
-      </small>
-    </footer>
-  </main>
-
-  <script src="./app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
