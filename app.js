@@ -1,79 +1,89 @@
-// Minimal checkbox checklist (no conversational flow)
-// - Renders full list with checkboxes
-// - Saves state to localStorage automatically
-// - Overall + per-section progress
-// - Expand/Collapse all + Reset
+const STORAGE_KEY = "als_bouncer_checklist_v2";
 
-const STORAGE_KEY = "als_diamond_bouncer_checklist_checkboxes_v1";
-
-const DATA = {
-  opening: [
-    { text: "Fill ice for bartenders" },
-    { text: "Walk parking lot for trash" },
-    { text: "Make sure bathrooms / dressing room is clean" },
-    { text: "Make sure all dishes are washed in the kitchen" },
-    { text: "Make sure kitchen is clean" },
-    { text: "Check toilet paper and paper towels" },
-    { text: "Make sure bar & stage have clean rags" },
+const CHECKLIST = {
+  "Opening Checklist": [
+    "Fill ice for bartenders",
+    "Walk parking lot for trash",
+    "Make sure bathrooms / dressing room is clean",
+    "Make sure all dishes are washed in the kitchen",
+    "Make sure kitchen is clean",
+    "Check toilet paper and paper towels",
+    "Make sure bar & stage have clean rags"
   ],
-  during: [
-    { text: "Make sure chairs are pushed in" },
-    { text: "Take any glasses to bar" },
-    { text: "Help girls with ones on stage" },
-    { text: "Keep eye on floor — no phones and/or photos" },
-    { text: "Wipe all chairs with disinfectant spray (bottle is pre-mixed and labeled)" },
+  "During Shift": [
+    "Make sure chairs are pushed in",
+    "Take any glasses to bar",
+    "Help girls with ones on stage",
+    "Keep eye on floor — no phones and/or photos",
+    "Wipe all chairs with disinfectant spray (bottle is pre-mixed and labeled)"
   ],
-  closing: [
-    { text: "Spray all booths and carpet in booths" },
-    {
-      text: "Use mop to clean stage / bathrooms / dressing (use hot water & bleach)",
-      note: "Change the water after each area. Do not use dirty water to clean."
-    },
-    { text: "Kitchen needs to be clean" },
-    { text: "Mop behind bar" },
-    { text: "Clean floor around stage" },
-    { text: "Clean the floor around the DJ area" },
-    { text: "Check cigarette holder out front" },
-    { text: "Take out trash and recycling" },
-  ],
+  "Closing Checklist": [
+    "Spray all booths and carpet in booths",
+    "Use mop to clean stage / bathrooms / dressing (use hot water & bleach)",
+    "Change the water after each area. Do NOT use dirty water.",
+    "Kitchen needs to be clean",
+    "Mop behind bar",
+    "Clean floor around stage",
+    "Clean the floor around the DJ area",
+    "Check cigarette holder out front",
+    "Take out trash and recycling"
+  ]
 };
 
-function makeId(sectionKey, index) {
-  return `${sectionKey}_${index}`;
-}
+let state = loadState();
 
 function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { checked: {} };
-    const parsed = JSON.parse(raw);
-    return (parsed && typeof parsed === "object") ? parsed : { checked: {} };
-  } catch {
-    return { checked: {} };
-  }
+  const saved = localStorage.getItem(STORAGE_KEY);
+  return saved ? JSON.parse(saved) : {};
 }
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-function setChecked(id, value) {
-  state.checked[id] = !!value;
-  saveState();
-  updateProgress();
-  updateItemStyle(id);
+function render() {
+  const container = document.getElementById("checklist");
+  container.innerHTML = "";
+
+  Object.keys(CHECKLIST).forEach(sectionName => {
+    const section = document.createElement("div");
+    section.className = "section";
+
+    const title = document.createElement("h2");
+    title.textContent = sectionName;
+    section.appendChild(title);
+
+    CHECKLIST[sectionName].forEach((text, index) => {
+      const id = sectionName + "_" + index;
+
+      const item = document {
+        const note = document.createElement("span");
+        note.className = "note";
+        note.textContent = text;
+        label.textContent = "";
+        label.appendChild(note);
+      }
+
+      checkbox.addEventListener("change", () => {
+        state[id] = checkbox.checked;
+        saveState();
+      });
+
+      item.appendChild(checkbox);
+      item.appendChild(label);
+      section.appendChild(item);
+    });
+
+    container.appendChild(section);
+  });
 }
 
-function isChecked(id) {
-  return !!state.checked[id];
-}
+document.getElementById("resetBtn").addEventListener("click", () => {
+  if (confirm("Reset all checkboxes?")) {
+    localStorage.removeItem(STORAGE_KEY);
+    state = {};
+    render();
+  }
+});
 
-function $(id) {
-  return document.getElementById(id);
-}
-
-const overallProgressText = $("overallProgressText");
-const overallProgressFill = $("overallProgressFill");
-
-const openingList = $("openingList");
-const duringList
+render();
