@@ -1,17 +1,114 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>You’re the Magic</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Al’s Diamond Bouncer Checklist</title>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1 id="first-message" class="magic-text">You’re the magic in my story</h1>
-    <h1 id="final-message" class="magic-text hidden">I am gonna love you till the end of it</h1>
-    <canvas id="bgCanvas"></canvas>
-  </div>
-  <script src="script.js"></script>
+  <main class="wrap">
+    <header class="header">
+      <h1>Al’s Diamond Bouncer Checklist</h1>
+      <div class="sub">
+        Task-only checklist guide · one step at a time · minimal chatter
+      </div>
+    </header>
+
+    <section class="card" aria-label="Checklist Guide">
+      <div class="row">
+        <div class="pill" id="phasePill">PHASE</div>
+        <div class="meta" id="stepMeta">Step -/-</div>
+      </div>
+
+      <div class="task" id="taskLine">Press Start.</div>
+
+      <div class="controls" id="singleControls">
+        <button class="btn primary" id="doneBtn">done</button>
+        <button class="btn" id="blockedBtn">blocked</button>
+        <button class="btn" id="skipBtn">skip</button>
+      </div>
+
+      <div class="blocker" id="blockerBox" hidden>
+        <label for="blockerInput">What’s the blocker?</label>
+        <input id="blockerInput" type="text" placeholder="Short blocker note…" />
+        <div class="controls">
+          <button class="btn primary" id="blockerSaveBtn">Save &amp; continue</button>
+          <button class="btn" id="blockerCancelBtn">Cancel</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="controls">
+        <button class="btn primary" id="startBtn">Start</button>
+        <button class="btn" id="resetBtn">Reset</button>
+
+        <div class="spacer"></div>
+
+        <label class="toggle">
+          <input type="checkbox" id="batchToggle" />
+          <span>Batch mode (up to 5)</span>
+        </label>
+      </div>
+
+      <div class="batch" id="batchBox" hidden>
+        <div class="batchHeader">
+          <div class="batchTitle">Batch (mark completed)</div>
+          <div class="batchHint">Select completed items, then submit.</div>
+        </div>
+        <ol class="batchList" id="batchList"></ol>
+        <div class="controls">
+          <button class="btn primary" id="batchSubmitBtn">Submit</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="log">
+        <div class="logTitle">Notes / Blocked / Skipped</div>
+        <pre class="logBody" id="logBody">(none)</pre>
+      </div>
+    </section>
+
+    <section class="card" id="closingVerifyCard" hidden aria-label="Closing Verification">
+      <h2>Closing verification</h2>
+
+      <div class="verifyRow">
+        <label>
+          <input type="checkbox" id="vMop" />
+          Confirm: stage/bathrooms/dressing mopped with clean water changes
+        </label>
+      </div>
+
+      <div class="verifyRow">
+        <label>
+          <input type="checkbox" id="vTrash" />
+          Confirm: trash &amp; recycling out
+        </label>
+      </div>
+
+      <div class="verifyRow">
+        <label>
+          <input type="checkbox" id="vBlocked" />
+          Any blocked items left to resolve? (check if NO blocked items remain)
+        </label>
+      </div>
+
+      <div class="controls">
+        <button class="btn primary" id="verifyBtn">Finalize</button>
+      </div>
+
+      <div class="verifyResult" id="verifyResult"></div>
+    </section>
+
+    <footer class="footer">
+      <small>
+        Tip: Host with GitHub Pages (repo → Settings → Pages → Deploy from branch).
+      </small>
+    </footer>
+  </main>
+
+  <script src="./app.js"></script>
 </body>
 </html>
