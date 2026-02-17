@@ -4,107 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Al’s Diamond Bouncer Checklist</title>
+  <meta name="description" content="Minimal checklist for Al’s Diamond bouncer duties (Opening, During Shift, Closing)." />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <main class="wrap">
     <header class="header">
-      <h1>Al’s Diamond Bouncer Checklist</h1>
-      <div class="sub">
-        Task-only checklist guide · one step at a time · minimal chatter
+      <div class="titleBlock">
+        <h1>Al’s Diamond Bouncer Checklist</h1>
+        <p class="sub">Check items as you complete them. Saves automatically on this device.</p>
+      </div>
+
+      <div class="headerActions">
+        <button class="btn" id="expandAllBtn" type="button">Expand all</button>
+        <button class="btn" id="collapseAllBtn" type="button">Collapse all</button>
+        <button class="btn danger" id="resetBtn" type="button">Reset</button>
       </div>
     </header>
 
-    <section class="card" aria-label="Checklist Guide">
-      <div class="row">
-        <div class="pill" id="phasePill">PHASE</div>
-        <div class="meta" id="stepMeta">Step -/-</div>
-      </div>
-
-      <div class="task" id="taskLine">Press Start.</div>
-
-      <div class="controls" id="singleControls">
-        <button class="btn primary" id="doneBtn">done</button>
-        <button class="btn" id="blockedBtn">blocked</button>
-        <button class="btn" id="skipBtn">skip</button>
-      </div>
-
-      <div class="blocker" id="blockerBox" hidden>
-        <label for="blockerInput">What’s the blocker?</label>
-        <input id="blockerInput" type="text" placeholder="Short blocker note…" />
-        <div class="controls">
-          <button class="btn primary" id="blockerSaveBtn">Save &amp; continue</button>
-          <button class="btn" id="blockerCancelBtn">Cancel</button>
+    <section class="card">
+      <div class="progressRow">
+        <div class="progressMeta">
+          <div class="progressTitle">Overall progress</div>
+          <div class="progressText" id="overallProgressText">0/0</div>
         </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="controls">
-        <button class="btn primary" id="startBtn">Start</button>
-        <button class="btn" id="resetBtn">Reset</button>
-
-        <div class="spacer"></div>
-
-        <label class="toggle">
-          <input type="checkbox" id="batchToggle" />
-          <span>Batch mode (up to 5)</span>
-        </label>
-      </div>
-
-      <div class="batch" id="batchBox" hidden>
-        <div class="batchHeader">
-          <div class="batchTitle">Batch (mark completed)</div>
-          <div class="batchHint">Select completed items, then submit.</div>
+        <div class="progressBar" aria-hidden="true">
+          <div class="progressFill" id="overallProgressFill"></div>
         </div>
-        <ol class="batchList" id="batchList"></ol>
-        <div class="controls">
-          <button class="btn primary" id="batchSubmitBtn">Submit</button>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="log">
-        <div class="logTitle">Notes / Blocked / Skipped</div>
-        <pre class="logBody" id="logBody">(none)</pre>
       </div>
     </section>
 
-    <section class="card" id="closingVerifyCard" hidden aria-label="Closing Verification">
-      <h2>Closing verification</h2>
+    <section class="card" aria-label="Checklist">
+      <details class="section" id="section-opening" open>
+        <summary>
+          <span class="summaryLeft">
+            <span class="sectionTitle">Opening</span>
+            <span class="sectionCount" id="openingCount">0/0</span>
+          </span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </summary>
+        <div class="sectionBody" id="openingList"></div>
+      </details>
 
-      <div class="verifyRow">
-        <label>
-          <input type="checkbox" id="vMop" />
-          Confirm: stage/bathrooms/dressing mopped with clean water changes
-        </label>
-      </div>
+      <details class="section" id="section-during">
+        <summary>
+          <span class="summaryLeft">
+            <span class="sectionTitle">During Shift</span>
+            <span class="sectionCount" id="duringCount">0/0</span>
+          </span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </summary>
+        <div class="sectionBody" id="duringList"></div>
+      </details>
 
-      <div class="verifyRow">
-        <label>
-          <input type="checkbox" id="vTrash" />
-          Confirm: trash &amp; recycling out
-        </label>
-      </div>
-
-      <div class="verifyRow">
-        <label>
-          <input type="checkbox" id="vBlocked" />
-          Any blocked items left to resolve? (check if NO blocked items remain)
-        </label>
-      </div>
-
-      <div class="controls">
-        <button class="btn primary" id="verifyBtn">Finalize</button>
-      </div>
-
-      <div class="verifyResult" id="verifyResult"></div>
+      <details class="section" id="section-closing">
+        <summary>
+          <span class="summaryLeft">
+            <span class="sectionTitle">Closing</span>
+            <span class="sectionCount" id="closingCount">0/0</span>
+          </span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </summary>
+        <div class="sectionBody" id="closingList"></div>
+      </details>
     </section>
 
     <footer class="footer">
       <small>
-        Tip: Host with GitHub Pages (repo → Settings → Pages → Deploy from branch).
+        Tip: Put these files in your GitHub repo root and enable GitHub Pages to share it.
       </small>
     </footer>
   </main>
