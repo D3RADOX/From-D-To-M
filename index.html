@@ -1,26 +1,287 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Al’s Diamond Bouncer Checklist</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BREATHE OR BUST</title>
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="container">
-    <header class="header">
-      <h1>Al’s Diamond Bouncer Checklist</h1>
-      <p class="sub">Tap to check. Saves automatically on this device.</p>
-    </header>
+<div id="bgb"></div>
+<div id="countdown"><div id="cd-num">3</div><div id="cd-label">GET READY</div></div>
 
-    <section id="checklist"></section>
+<!-- RESULT OVERLAY -->
+<div id="rr">
+  <div class="rr-char" id="rr-char">🫁</div>
+  <div class="rr-title" id="rr-title">ROUND CLEAR!</div>
+  <div class="rr-stars" id="rr-stars">⭐⭐⭐</div>
+  <div class="rr-score" id="rr-score">Score: 0</div>
+  <div class="rr-msg" id="rr-msg">Nice work.</div>
+  <div class="rr-btns">
+    <button class="btn btn-red" id="rr-next">NEXT ROUND ▶</button>
+    <button class="btn btn-ghost" id="rr-quit">BACK TO HUB</button>
+  </div>
+</div>
 
-    <footer class="footer">
-      <p class="rule">You will not be allowed to leave until all cleaning / disinfecting is done at the end of the night.</p>
-      <button id="resetBtn" type="button">Reset All</button>
-    </footer>
-  </main>
+<!-- HOME -->
+<div class="screen active" id="home">
+  <div class="wrap z1 fade-in">
+    <div style="text-align:center;padding:22px 0 10px">
+      <div class="logo">BREATHE<br>OR BUST</div>
+      <div class="logo-sub">Respiratory Showdown</div>
+      <span class="home-char">🫁</span>
+    </div>
+    <div class="stats-strip">
+      <div class="stat"><span class="v" id="hs-best">0</span><span class="l">Best</span></div>
+      <div class="stat"><span class="v" id="hs-sess">0</span><span class="l">Sessions</span></div>
+      <div class="stat"><span class="v" id="hs-streak">0🔥</span><span class="l">Streak</span></div>
+    </div>
+    <div class="sec-divider">― ORIGINALS ―</div>
+    <div class="game-grid">
+      <div class="gc ct" id="gc-ring"><div class="gc-icon">⭕</div><div class="gc-name">BREATH RING</div><div class="gc-best" id="gb-ring">Best: —</div></div>
+      <div class="gc cc" id="gc-inflate"><div class="gc-icon">🎈</div><div class="gc-name">LUNG INFLATOR</div><div class="gc-best" id="gb-inflate">Best: —</div></div>
+      <div class="gc cp" id="gc-bubbles"><div class="gc-icon">🫧</div><div class="gc-name">BUBBLE BLOWER</div><div class="gc-best" id="gb-bubbles">Best: —</div></div>
+      <div class="gc cg" id="gc-boss"><div class="gc-icon">🥊</div><div class="gc-name">BREATH BOSS</div><div class="gc-best" id="gb-boss">Best: —</div></div>
+    </div>
+    <div class="sec-divider">― REMIX GAMES ―</div>
+    <div class="game-grid">
+      <div class="gc co" id="gc-whack"><div class="gc-icon">🔨</div><div class="gc-name">WHACK-A-WHEEZE</div><div class="gc-best" id="gb-whack">Best: —</div></div>
+      <div class="gc cl" id="gc-snake"><div class="gc-icon">🐍</div><div class="gc-name">BREATH SNAKE</div><div class="gc-best" id="gb-snake">Best: —</div></div>
+      <div class="gc cm" id="gc-invaders"><div class="gc-icon">👾</div><div class="gc-name">BREATH INVADERS</div><div class="gc-best" id="gb-invaders">Best: —</div></div>
+      <div class="gc csk" id="gc-runner"><div class="gc-icon">🏃</div><div class="gc-name">LUNG RUNNER</div><div class="gc-best" id="gb-runner">Best: —</div></div>
+      <div class="gc cgo" id="gc-slots"><div class="gc-icon">🎰</div><div class="gc-name">PEAK FLOW SLOTS</div><div class="gc-best" id="gb-slots">Best: —</div></div>
+      <div class="gc cb" id="gc-pong"><div class="gc-icon">🏓</div><div class="gc-name">BREATH PONG</div><div class="gc-best" id="gb-pong">Best: —</div></div>
+      <div class="gc ccy" id="gc-stack"><div class="gc-icon">🧱</div><div class="gc-name">OXYGEN STACK</div><div class="gc-best" id="gb-stack">Best: —</div></div>
+      <div class="gc cpk" id="gc-dash"><div class="gc-icon">🐸</div><div class="gc-name">DIAPHRAGM DASH</div><div class="gc-best" id="gb-dash">Best: —</div></div>
+    </div>
+    <div class="bnav">
+      <button class="btn btn-ghost" style="font-size:.88rem" id="nav-lb">🏆 Leaderboard</button>
+      <button class="btn btn-ghost" style="font-size:.88rem" id="nav-prog">📈 Progress</button>
+    </div>
+  </div>
+</div>
 
-  <script src="app.js"></script>
+<!-- G1: BREATH RING -->
+<div class="screen" id="game-ring">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-ring">← Hub</button><div class="gtitle" style="color:var(--teal)">⭕ BREATH RING</div><div class="sbadge">⭐<span id="rs">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="rr2">1</span>/5</div><div class="lives" id="rl">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="rspeech">Get ready...</div><span class="char" id="rchar">😐</span></div>
+    <div class="ring-wrap"><canvas id="ring-cv" width="218" height="218"></canvas><div class="ring-inner"><div class="plbl" id="rphase">READY</div><div class="pnum" id="rtimer">—</div></div></div>
+    <div class="tapzone" id="rtap">TAP TO SYNC BREATH</div>
+    <div class="hint">Tap at the <b>start</b> of each phase for max points</div>
+  </div>
+</div>
+
+<!-- G2: LUNG INFLATOR -->
+<div class="screen" id="game-inflate">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-inflate">← Hub</button><div class="gtitle" style="color:var(--coral)">🎈 LUNG INFLATOR</div><div class="sbadge">⭐<span id="is">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="ir">1</span>/5</div><div class="lives" id="il">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="ispeech">Hold to inflate. Release at sweet spot!</div><span class="char" id="ichar">😤</span></div>
+    <div class="bal-stage" id="bal-stage">
+      <svg id="balloon-svg" width="110" height="180" viewBox="0 0 110 180" style="overflow:visible">
+        <defs><radialGradient id="balGrad" cx="38%" cy="32%" r="65%"><stop offset="0%" stop-color="#ff9090"/><stop offset="100%" stop-color="#cc2020"/></radialGradient></defs>
+        <ellipse id="bal-body" cx="55" cy="70" rx="44" ry="58" fill="url(#balGrad)"/>
+        <ellipse cx="40" cy="50" rx="10" ry="13" fill="rgba(255,255,255,.22)" transform="rotate(-15,40,50)"/>
+        <line id="bal-string" x1="55" y1="130" x2="55" y2="165" stroke="#777" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="pbar-wrap"><div class="pbar" id="pbar" style="width:0%;background:linear-gradient(90deg,var(--teal),var(--coral))"></div></div>
+    <div class="pbar-targets"><div class="pt-zone" style="left:60%;width:20%"></div><div class="pt-mark" style="left:60%"></div><div class="pt-mark" style="left:80%"></div></div>
+    <div class="dzone" id="dzone">⚠️ DANGER ZONE ⚠️</div>
+    <div class="tapzone" id="ibtn">HOLD TO INHALE</div>
+    <div class="hint">🟢 Green zone = 60–80% = max score. Release to score!</div>
+  </div>
+</div>
+
+<!-- G3: BUBBLE BLOWER -->
+<div class="screen" id="game-bubbles">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-bubbles">← Hub</button><div class="gtitle" style="color:var(--purple)">🫧 BUBBLE BLOWER</div><div class="sbadge">⭐<span id="bs">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="br">1</span>/5</div><div class="lives" id="bl">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="bspeech">Blow steady — float bubbles to stars!</div><span class="char" id="bchar">😮‍💨</span></div>
+    <canvas id="bub-canvas" width="390" height="182" style="width:100%;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid var(--border)"></canvas>
+    <div class="bar-wrap bar-h6"><div class="bar-fill bar-h6" id="bub-tbar" style="width:100%;background:rgba(255,255,255,.18)"></div></div>
+    <div class="bar-wrap bar-h18"><div class="bar-fill bar-h18" id="ebar" style="width:0%;background:linear-gradient(90deg,var(--teal),var(--purple))"></div></div>
+    <div class="tapzone" id="bbtn">HOLD TO EXHALE</div>
+    <div class="hint">Steady exhale = bigger bubbles = more points ⭐</div>
+  </div>
+</div>
+
+<!-- G4: BREATH BOSS -->
+<div class="screen" id="game-boss">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-boss">← Hub</button><div class="gtitle" style="color:var(--green)">🥊 BREATH BOSS</div><div class="sbadge">⭐<span id="bos">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="bor">1</span>/5</div><div class="lives" id="bol">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="bosspeech">Hit nodes as they cross the line!</div><span class="char" id="boschar">😤</span></div>
+    <div class="combo" id="combo"></div>
+    <div class="beat-track" id="track"><div class="b-line"></div><div class="b-cursor"></div></div>
+    <div class="bar-wrap bar-h6" style="margin-top:2px"><div class="bar-fill bar-h6" id="boss-tbar" style="width:100%;background:rgba(255,255,255,.18)"></div></div>
+    <div class="tapzone" id="bosstap">TAP TO BREATHE</div>
+    <div class="hint">Match the colour — IN 🩵 HOLD 💛 OUT ❤️</div>
+  </div>
+</div>
+
+<!-- G5: WHACK-A-WHEEZE -->
+<div class="screen" id="game-whack">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-whack">← Hub</button><div class="gtitle" style="color:var(--orange)">🔨 WHACK-A-WHEEZE</div><div class="sbadge">⭐<span id="wh-s">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="wh-r">1</span>/3</div><div class="lives" id="wh-l">❤️❤️❤️</div></div>
+    <div class="phase-row">
+      <div class="phase-pill" id="wh-phase">INHALE</div>
+      <div class="rnd-timer" id="wh-timer">30</div>
+    </div>
+    <div class="hole-grid" id="hole-grid">
+      <div class="hole" data-idx="0" id="hole-0"><span id="mole-0"></span></div>
+      <div class="hole" data-idx="1" id="hole-1"><span id="mole-1"></span></div>
+      <div class="hole" data-idx="2" id="hole-2"><span id="mole-2"></span></div>
+      <div class="hole" data-idx="3" id="hole-3"><span id="mole-3"></span></div>
+      <div class="hole" data-idx="4" id="hole-4"><span id="mole-4"></span></div>
+      <div class="hole" data-idx="5" id="hole-5"><span id="mole-5"></span></div>
+    </div>
+    <div class="charbox"><div class="speech" id="wh-speech">Whack wheezers that match your breath!</div><span class="char" id="wh-char">🔨</span></div>
+    <div class="hint">Tap a wheezer ONLY during its matching breath phase</div>
+  </div>
+</div>
+
+<!-- G6: BREATH SNAKE -->
+<div class="screen" id="game-snake">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-snake">← Hub</button><div class="gtitle" style="color:var(--lime)">🐍 BREATH SNAKE</div><div class="sbadge">⭐<span id="sn-s">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="sn-r">1</span>/3</div><div class="lives" id="sn-l">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="sn-speech">Eat food during the right phase for bonus!</div><span class="char" id="sn-char">🐍</span></div>
+    <canvas id="snake-cv" width="280" height="196" style="border-radius:14px;background:rgba(255,255,255,.02);border:1px solid var(--border)"></canvas>
+    <div class="dpad">
+      <div class="dpad-blank"></div><div class="dpad-btn" id="sn-up">⬆️</div><div class="dpad-blank"></div>
+      <div class="dpad-btn" id="sn-left">⬅️</div><div class="dpad-blank"></div><div class="dpad-btn" id="sn-right">➡️</div>
+      <div class="dpad-blank"></div><div class="dpad-btn" id="sn-down">⬇️</div><div class="dpad-blank"></div>
+    </div>
+    <div class="hint">Eat food during matching breath phase = 2x points 🐍</div>
+  </div>
+</div>
+
+<!-- G7: BREATH INVADERS -->
+<div class="screen" id="game-invaders">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-invaders">← Hub</button><div class="gtitle" style="color:var(--magenta)">👾 BREATH INVADERS</div><div class="sbadge">⭐<span id="iv-s">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="iv-r">1</span>/3</div><div class="lives" id="iv-l">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="iv-speech">Inhale to charge. Exhale to fire!</div><span class="char" id="iv-char">🚀</span></div>
+    <canvas id="inv-canvas" width="360" height="220" style="width:100%;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid var(--border)"></canvas>
+    <div class="bar-wrap bar-h18"><div class="bar-fill bar-h18" id="iv-charge" style="width:0%;background:linear-gradient(90deg,var(--sky),var(--magenta))"></div></div>
+    <div class="tapzone" id="iv-btn">HOLD TO CHARGE / RELEASE TO FIRE</div>
+    <div class="hint">Hold = INHALE (charge builds). Release = EXHALE (fire!)</div>
+  </div>
+</div>
+
+<!-- G8: LUNG RUNNER -->
+<div class="screen" id="game-runner">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-runner">← Hub</button><div class="gtitle" style="color:var(--sky)">🏃 LUNG RUNNER</div><div class="sbadge">⭐<span id="rn-s">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="rn-r">1</span>/3</div><div class="lives" id="rn-l">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="rn-speech">Jump over blocks. Duck under beams!</div><span class="char" id="rn-char">🏃</span></div>
+    <canvas id="run-canvas" width="360" height="158" style="width:100%;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid var(--border)"></canvas>
+    <div class="tapzone" id="rn-tap">TAP TO JUMP</div>
+    <div class="hint">JUMP = tap the button. DUCK = do nothing!</div>
+  </div>
+</div>
+
+<!-- G9: PEAK FLOW SLOTS -->
+<div class="screen" id="game-slots">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-slots">← Hub</button><div class="gtitle" style="color:var(--gold)">🎰 PEAK FLOW SLOTS</div><div class="sbadge">⭐<span id="sl-s">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Spin <span id="sl-r">1</span>/5</div><div class="lives" id="sl-l">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="sl-speech">Your lungs have entered the casino.</div><span class="char" id="sl-char">🎰</span></div>
+    <div class="slot-machine">
+      <div class="reel" id="reel-0"><div class="reel-val" id="rv-0">IN</div></div>
+      <div class="reel" id="reel-1"><div class="reel-val" id="rv-1">HLD</div></div>
+      <div class="reel" id="reel-2"><div class="reel-val" id="rv-2">EX</div></div>
+    </div>
+    <div class="slot-result" id="sl-result"></div>
+    <div class="tapzone" id="sl-tap">TAP TO PULL / STOP REELS</div>
+    <div class="hint">Each tap stops one reel. Match 3 = JACKPOT! 🎉</div>
+  </div>
+</div>
+
+<!-- G10: BREATH PONG -->
+<div class="screen" id="game-pong">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-pong">← Hub</button><div class="gtitle" style="color:var(--blue)">🏓 BREATH PONG</div><div class="sbadge">⭐<span id="pg-s">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="pg-r">1</span>/3</div><div class="lives" id="pg-l">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="pg-speech">Hold to inhale. Release to exhale!</div><span class="char" id="pg-char">🏓</span></div>
+    <canvas id="pong-canvas" width="340" height="245" style="width:100%;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid var(--border)"></canvas>
+    <div class="tapzone" id="pg-btn">HOLD = PADDLE UP</div>
+    <div class="hint">First to 5 points wins the round!</div>
+  </div>
+</div>
+
+<!-- G11: OXYGEN STACK -->
+<div class="screen" id="game-stack">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-stack">← Hub</button><div class="gtitle" style="color:var(--cyan)">🧱 OXYGEN STACK</div><div class="sbadge">⭐<span id="sk-s">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="sk-r">1</span>/3</div><div class="lives" id="sk-l">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="sk-speech">Route the falling block to the matching slot!</div><span class="char" id="sk-char">🧱</span></div>
+    <canvas id="stack-canvas" width="270" height="300" style="border-radius:14px;background:rgba(255,255,255,.02);border:1px solid var(--border)"></canvas>
+    <div class="col-btns">
+      <div class="col-btn" id="sk-left">COL 1</div>
+      <div class="col-btn" id="sk-center">COL 2</div>
+      <div class="col-btn" id="sk-right">COL 3</div>
+    </div>
+    <div class="hint">Tap a column to route the block before it falls!</div>
+  </div>
+</div>
+
+<!-- G12: DIAPHRAGM DASH -->
+<div class="screen" id="game-dash">
+  <div class="wrap z1">
+    <div class="top-bar"><button class="back" id="back-dash">← Hub</button><div class="gtitle" style="color:var(--pink)">🐸 DIAPHRAGM DASH</div><div class="sbadge">⭐<span id="da-s">0</span></div></div>
+    <div class="row-info"><div class="rlbl">Round <span id="da-r">1</span>/3</div><div class="lives" id="da-l">❤️❤️❤️</div></div>
+    <div class="charbox"><div class="speech" id="da-speech">Tap during INHALE to hop forward!</div><span class="char" id="da-char">🐸</span></div>
+    <canvas id="dash-canvas" width="340" height="270" style="width:100%;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid var(--border)"></canvas>
+    <div class="tapzone" id="da-tap">TAP TO HOP</div>
+    <div class="hint">INHALE phase = hop forward. EXHALE = back. HOLD = stay!</div>
+  </div>
+</div>
+
+<!-- LEADERBOARD -->
+<div class="screen" id="lb">
+  <div class="wrap z1" style="gap:11px">
+    <div class="top-bar" style="padding-top:16px"><button class="back" id="back-lb">← Hub</button><div style="font-family:var(--fh);font-size:1.35rem;color:var(--yellow)">🏆 LEADERBOARD</div><div style="width:44px"></div></div>
+    <div class="lb-tabs" id="lbtabs">
+      <div class="lb-tab active" data-filter="all">ALL</div>
+      <div class="lb-tab" data-filter="ring">RING</div>
+      <div class="lb-tab" data-filter="inflate">INFLATE</div>
+      <div class="lb-tab" data-filter="boss">BOSS</div>
+      <div class="lb-tab" data-filter="whack">WHACK</div>
+      <div class="lb-tab" data-filter="snake">SNAKE</div>
+      <div class="lb-tab" data-filter="slots">SLOTS</div>
+      <div class="lb-tab" data-filter="pong">PONG</div>
+    </div>
+    <div class="lb-list" id="lb-list"></div>
+    <button class="btn btn-ghost" id="clear-lb" style="font-size:.9rem">🗑 Clear Board</button>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="screen" id="prog">
+  <div class="wrap z1" style="gap:11px">
+    <div class="top-bar" style="padding-top:16px"><button class="back" id="back-prog">← Hub</button><div style="font-family:var(--fh);font-size:1.35rem;color:var(--mint)">📈 PROGRESS</div><div style="width:44px"></div></div>
+    <div class="streak-banner"><div class="sf">🔥</div><div class="st"><div class="sv"><span id="pstreak">0</span> Day Streak</div><div class="sl">Keep breathing every day!</div></div></div>
+    <div class="pgrid">
+      <div class="pcard"><span class="pv" id="pg-s2">0</span><span class="pl">Sessions</span></div>
+      <div class="pcard"><span class="pv" id="pg-b">0</span><span class="pl">Best Score</span></div>
+      <div class="pcard"><span class="pv" id="pg-a">0</span><span class="pl">Avg Score</span></div>
+      <div class="pcard"><span class="pv" id="pg-t">0</span><span class="pl">Total Points</span></div>
+    </div>
+    <div class="sec-lbl">BEST PER GAME</div>
+    <div id="prog-games" style="display:flex;flex-direction:column;gap:7px;width:100%"></div>
+    <div class="sec-lbl" style="margin-top:4px">RECENT SESSIONS</div>
+    <div class="sess-list" id="sess-list"></div>
+    <button class="btn btn-ghost" id="clear-prog" style="font-size:.9rem">🗑 Clear History</button>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
 </body>
 </html>
